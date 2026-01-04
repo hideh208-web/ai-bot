@@ -1,2 +1,8 @@
 discord.py
 groq
+flask
+gunicorn
+discord.py
+flask
+groq
+gunicorn
