@@ -1,3 +1,4 @@
+
 import os
 import asyncio
 import logging
@@ -11,6 +12,23 @@ from discord.ext import commands
 tracemalloc.start()
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
+from flask import Flask
+from threading import Thread
+
+# Flask server to keep Render happy
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "I'm alive!"
+
+def run_flask():
+    app.run(host='0.0.0.0', port=5000)
+
+def keep_alive():
+    t = Thread(target=run_flask)
+    t.start()
 
 # Load tokens
 try:
@@ -130,4 +148,6 @@ async def on_message(message):
 
     await xevfx.process_commands(message)
 
-xevfx.run(discord_token)
+if __name__ == "__main__":
+    keep_alive()
+    xevfx.run(discord_token)
