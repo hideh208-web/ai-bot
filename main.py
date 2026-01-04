@@ -1,4 +1,3 @@
-
 import os
 import asyncio
 import logging
@@ -24,7 +23,8 @@ def home():
     return "I'm alive!"
 
 def run_flask():
-    app.run(host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False)
 
 def keep_alive():
     t = Thread(target=run_flask)
